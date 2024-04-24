@@ -3,25 +3,22 @@
 #include "bug.h"
 #include "crawler.h"
 #include "hopper.h"
+#include "board.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
     std::vector<Bug*> bug_vector;
+    Board board;
+    board.initializeBoardFromFile("bugs.txt");
 
-    Bug* crawler = new Crawler(1, std::make_pair(0, 0), Direction::North, 1);
-    Bug* hopper = new Hopper(2, std::make_pair(5, 5), Direction::East, 2, 3);
-
-    bug_vector.push_back(crawler);
-    bug_vector.push_back(hopper);
+    bug_vector = board.getBugVector();
 
     for (Bug* bug : bug_vector) {
         bug->move();
     }
-
     for (Bug* bug : bug_vector) {
         delete bug;
     }
-
     return 0;
 }
+
 
