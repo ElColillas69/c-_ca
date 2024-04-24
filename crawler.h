@@ -7,12 +7,12 @@
 
 #include "Bug.h"
 
-class Crawler : private Bug {
+class Crawler : public Bug {
 public:
     Crawler(int _id, std::pair<int, int> _position, Direction _direction, int _size);
     void move() override;
 
-    using Bug::isPathBlocked;
+    using Bug::isWayBlocked;
 };
 
 #endif // CRAWLER_H

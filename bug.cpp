@@ -31,7 +31,7 @@ public:
 
     ~Bug() = default;
 
-    bool isPathBlocked() {
+    bool isWayBlocked() {
         int x = myPosition.first;
         int y = myPosition.second;
         int maxX = 20;
