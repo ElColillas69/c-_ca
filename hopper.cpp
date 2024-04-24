@@ -30,10 +30,12 @@ void Hopper::move() {
             }
             path.push_back(position);
         } else {
-            // Generate random direction
-            int randomDir = rand() % 4 + 1; // 1-4
-            direction = static_cast<Direction>(randomDir);
-            move(); // Recursively call move until bug can move forward
+            // Handle if way is blocked
+            // Implement handling of blocked way
         }
     }
+}
+
+int Hopper::getHopLength() const {
+    return hopLength;
 }

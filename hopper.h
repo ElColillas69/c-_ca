@@ -14,9 +14,7 @@ private:
 public:
     Hopper(int _id, std::pair<int, int> _position, Direction _direction, int _size, int _hopLength);
     void move() override;
-
-    using Bug::isWayBlocked;
+    int getHopLength() const;
 };
 
 #endif // HOPPER_H
-
