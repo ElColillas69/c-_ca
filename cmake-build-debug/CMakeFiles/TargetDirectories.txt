@@ -1,0 +1,3 @@
+C:/Users/adria/CLionProjects/C++_CA/cmake-build-debug/CMakeFiles/C___CA.dir
+C:/Users/adria/CLionProjects/C++_CA/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/adria/CLionProjects/C++_CA/cmake-build-debug/CMakeFiles/rebuild_cache.dir
