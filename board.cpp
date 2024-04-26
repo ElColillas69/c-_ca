@@ -26,9 +26,12 @@ void Board::initializeBoardFromFile(const std::string& filename) {
         return;
     }
 
+    std::cout << "Opened file: " << filename << std::endl;
+
     int id, x, y, direction, size;
     while (file >> id >> x >> y >> direction >> size) {
         Direction dir = static_cast<Direction>(direction);
+
         Bug* bug;
         if (dir == Direction::North || dir == Direction::South) {
             bug = new Crawler(id, std::make_pair(x, y), dir, size);
@@ -66,3 +69,5 @@ void Board::displayBugDetails(int bugId) const {
         std::cout << "Bug " << bugId << " not found." << std::endl;
     }
 }
+
+

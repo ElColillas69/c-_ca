@@ -2,83 +2,57 @@
 // Created by adria on 4/24/2024.
 //
 
-#ifndef BUG_H
-#define BUG_H
-
 #include <iostream>
 #include <utility>
 #include <list>
 #include "bug.h"
 
-enum class Direction {
-    North,
-    East,
-    South,
-    West
-};
+Bug::Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size)
+        : id(_id), position(_position), direction(_direction), size(_size), alive(true) {}
 
-class Bug {
-private:
-    int Id;
-    std::pair<int, int> Position;
-    Direction Direction;
-    int Size;
-    bool Alive;
-    std::list<std::pair<int, int>> Path;
+Bug::~Bug() {}
 
-public:
-    Bug(int id, std::pair<int, int> position, enum Direction direction, int size)
-            : Id(id), Position(position), Direction(direction), Size(size), Alive(true) {}
+bool Bug::isWayBlocked() {
+    // Implementation
+    int x = position.first;
+    int y = position.second;
+    int maxX = 20;
+    int maxY = 20;
 
-    ~Bug() = default;
-
-    bool isWayBlocked() {
-        int x = Position.first;
-        int y = Position.second;
-        int maxX = 20;
-        int maxY = 20;
-
-        switch (Direction) {
-            case Direction::North:
-                return y == 0;
-            case Direction::East:
-                return x == maxX - 1;
-            case Direction::South:
-                return y == maxY - 1;
-            case Direction::West:
-                return x == 0;
-            default:
-                throw std::logic_error("Invalid direction");
-        }
+    switch (direction) {
+        case Direction::North:
+            return y == 0;
+        case Direction::East:
+            return x == maxX - 1;
+        case Direction::South:
+            return y == maxY - 1;
+        case Direction::West:
+            return x == 0;
+        default:
+            throw std::logic_error("Invalid direction");
     }
+}
 
-    int getId() const {
-        return Id;
-    }
+int Bug::getId() const {
+    return id;
+}
 
-    std::pair<int, int> getPosition() const {
-        return Position;
-    }
+std::pair<int, int> Bug::getPosition() const {
+    return position;
+}
 
-    enum Direction getDirection() const {
-        return Direction;
-    }
+Direction Bug::getDirection() const {
+    return direction;
+}
 
-    int getSize() const {
-        return Size;
-    }
+int Bug::getSize() const {
+    return size;
+}
 
-    bool isAlive() const {
-        return Alive;
-    }
+bool Bug::isAlive() const {
+    return alive;
+}
 
-    std::list<std::pair<int, int>> getPath() const {
-        return Path;
-    }
-
-    void setPath(const std::list<std::pair<int, int>>& newPath) {
-        Path = newPath;
-    }
-};
-
-#endif // BUG_H
+std::list<std::pair<int, int>> Bug::getPath() const {
+    return path;
+}

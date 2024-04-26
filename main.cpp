@@ -5,12 +5,24 @@
 #include "crawler.h"
 #include "hopper.h"
 #include "board.h"
+#include <filesystem>
+
 
 int main() {
+    // Print the current working directory
+    std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
+
+    // Construct the absolute file path
+    std::string absoluteFilePath = "C:/Users/adria/CLionProjects/C++_CA/bugs.txt";
+
+    // Create a board and initialize it from the file
     Board board;
-    board.initializeBoardFromFile("bugs.txt");
+    board.initializeBoardFromFile(absoluteFilePath);
 
     std::vector<Bug*> bug_vector = board.getBugVector();
+    for (const Bug* bug : bug_vector) {
+        std::cout << "Bug ID: " << bug->getId() << ", Position: (" << bug->getPosition().first << ", " << bug->getPosition().second << ")" << std::endl;
+    }
 
     for (Bug* bug : bug_vector) {
         std::cout << bug->getId() << " " << (dynamic_cast<Crawler*>(bug) ? "Crawler" : "Hopper") << " "
