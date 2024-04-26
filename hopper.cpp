@@ -2,7 +2,6 @@
 // Created by adria on 4/24/2024.
 //
 #include "hopper.h"
-#include <cstdlib>
 #include <stdexcept>
 
 Hopper::Hopper(int _id, std::pair<int, int> _position, Direction _direction, int _size, int _hopLength)
@@ -30,7 +29,6 @@ void Hopper::move() {
             }
             path.push_back(position);
         } else {
-
         }
     }
 }

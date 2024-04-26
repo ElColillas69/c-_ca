@@ -3,10 +3,13 @@
 //
 
 #include "board.h"
+#include "bug.h"
 #include <fstream>
 #include <iostream>
 #include "crawler.h"
 #include "hopper.h"
+#include <vector>
+
 
 Board::Board() {}
 

@@ -5,11 +5,12 @@
 #ifndef BUG_H
 #define BUG_H
 
+#include <iostream>
 #include <utility>
 #include <list>
 
 enum class Direction {
-    North = 1,
+    North,
     East,
     South,
     West

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <utility>
 #include <list>
+#include "bug.h"
 
 enum class Direction {
     North,
@@ -18,26 +19,26 @@ enum class Direction {
 
 class Bug {
 private:
-    int myId;
-    std::pair<int, int> myPosition;
-    Direction myDirection;
-    int mySize;
-    bool myAlive;
-    std::list<std::pair<int, int>> myPath;
+    int Id;
+    std::pair<int, int> Position;
+    Direction Direction;
+    int Size;
+    bool Alive;
+    std::list<std::pair<int, int>> Path;
 
 public:
-    Bug(int id, std::pair<int, int> position, Direction direction, int size)
-            : myId(id), myPosition(position), myDirection(direction), mySize(size), myAlive(true) {}
+    Bug(int id, std::pair<int, int> position, enum Direction direction, int size)
+            : Id(id), Position(position), Direction(direction), Size(size), Alive(true) {}
 
     ~Bug() = default;
 
     bool isWayBlocked() {
-        int x = myPosition.first;
-        int y = myPosition.second;
+        int x = Position.first;
+        int y = Position.second;
         int maxX = 20;
         int maxY = 20;
 
-        switch (myDirection) {
+        switch (Direction) {
             case Direction::North:
                 return y == 0;
             case Direction::East:
@@ -52,31 +53,31 @@ public:
     }
 
     int getId() const {
-        return myId;
+        return Id;
     }
 
     std::pair<int, int> getPosition() const {
-        return myPosition;
+        return Position;
     }
 
-    Direction getDirection() const {
-        return myDirection;
+    enum Direction getDirection() const {
+        return Direction;
     }
 
     int getSize() const {
-        return mySize;
+        return Size;
     }
 
     bool isAlive() const {
-        return myAlive;
+        return Alive;
     }
 
     std::list<std::pair<int, int>> getPath() const {
-        return myPath;
+        return Path;
     }
 
     void setPath(const std::list<std::pair<int, int>>& newPath) {
-        myPath = newPath;
+        Path = newPath;
     }
 };
 

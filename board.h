@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 #include "bug.h"
+#include <iostream>
+#include <fstream>
 
 class Board {
 private:
