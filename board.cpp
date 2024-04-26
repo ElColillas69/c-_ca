@@ -29,8 +29,12 @@ void Board::initializeBoardFromFile(const std::string& filename) {
     std::cout << "Opened file: " << filename << std::endl;
 
     int id, x, y, direction, size;
+    int lineNumber = 0;
+
+    std::cout << "File contents:" << std::endl;
     while (file >> id >> x >> y >> direction >> size) {
-        std::cout << "Read bug: ID=" << id << ", Position=(" << x << "," << y << "), Direction=" << direction << ", Size=" << size << std::endl;
+        lineNumber++;
+        std::cout << "Line " << lineNumber << ": " << id << " " << x << " " << y << " " << direction << " " << size << std::endl;
 
         auto dir = static_cast<Direction>(direction);
         Bug* bug;
@@ -45,6 +49,15 @@ void Board::initializeBoardFromFile(const std::string& filename) {
     file.close();
 
     std::cout << "Number of bugs read: " << bugVector.size() << std::endl;
+    if (bugVector.empty()) {
+        std::cout << "No bugs were read from the file." << std::endl;
+    } else {
+        std::cout << "Bug IDs in bugVector: ";
+        for (const auto& bug : bugVector) {
+            std::cout << bug->getId() << " ";
+        }
+        std::cout << std::endl;
+    }
 }
 
 std::vector<Bug*> Board::getBugVector() const {
