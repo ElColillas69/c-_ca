@@ -11,7 +11,7 @@
 #include <vector>
 
 
-Board::Board() {}
+Board::Board() = default;
 
 Board::~Board() {
     for (Bug* bug : bugVector) {
@@ -30,8 +30,9 @@ void Board::initializeBoardFromFile(const std::string& filename) {
 
     int id, x, y, direction, size;
     while (file >> id >> x >> y >> direction >> size) {
-        Direction dir = static_cast<Direction>(direction);
+        std::cout << "Read bug: ID=" << id << ", Position=(" << x << "," << y << "), Direction=" << direction << ", Size=" << size << std::endl;
 
+        auto dir = static_cast<Direction>(direction);
         Bug* bug;
         if (dir == Direction::North || dir == Direction::South) {
             bug = new Crawler(id, std::make_pair(x, y), dir, size);
@@ -42,6 +43,8 @@ void Board::initializeBoardFromFile(const std::string& filename) {
     }
 
     file.close();
+
+    std::cout << "Number of bugs read: " << bugVector.size() << std::endl;
 }
 
 std::vector<Bug*> Board::getBugVector() const {
@@ -49,6 +52,12 @@ std::vector<Bug*> Board::getBugVector() const {
 }
 void Board::displayBugDetails(int bugId) const {
     bool found = false;
+    std::cout << "Bug IDs in bugVector: ";
+    for (const Bug* bug : bugVector) {
+        std::cout << bug->getId() << " ";
+    }
+    std::cout << std::endl;
+
     for (const Bug* bug : bugVector) {
         if (bug->getId() == bugId) {
             found = true;
