@@ -13,7 +13,8 @@ enum class Direction {
     North,
     East,
     South,
-    West
+    West,
+    Count
 };
 
 class Bug {
