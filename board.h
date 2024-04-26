@@ -18,8 +18,8 @@ public:
     ~Board();
 
     void initializeBoardFromFile(const std::string& filename);
-    [[nodiscard]] std::vector<Bug*> getBugVector() const;
+    std::vector<Bug*> getBugVector() const;
+    void displayBugDetails(int bugId) const;
 };
-
 
 #endif // BOARD_H

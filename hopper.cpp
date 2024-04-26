@@ -2,7 +2,7 @@
 // Created by adria on 4/24/2024.
 //
 #include "hopper.h"
-#include <cstdlib> // for rand()
+#include <cstdlib>
 #include <stdexcept>
 
 Hopper::Hopper(int _id, std::pair<int, int> _position, Direction _direction, int _size, int _hopLength)
@@ -11,7 +11,7 @@ Hopper::Hopper(int _id, std::pair<int, int> _position, Direction _direction, int
 void Hopper::move() {
     if (alive) {
         if (!isWayBlocked()) {
-            int hopDistance = std::min(hopLength, 20); // Assuming a 20x20 grid
+            int hopDistance = std::min(hopLength, 20);
             switch (direction) {
                 case Direction::North:
                     position.second -= hopDistance;
@@ -30,8 +30,7 @@ void Hopper::move() {
             }
             path.push_back(position);
         } else {
-            // Handle if way is blocked
-            // Implement handling of blocked way
+
         }
     }
 }

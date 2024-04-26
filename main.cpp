@@ -9,6 +9,7 @@
 int main() {
     Board board;
     board.initializeBoardFromFile("bugs.txt");
+
     std::vector<Bug*> bug_vector = board.getBugVector();
 
     for (Bug* bug : bug_vector) {
@@ -22,11 +23,17 @@ int main() {
     for (Bug* bug : bug_vector) {
         bug->move();
     }
+
+    int bugId;
+    std::cout << "Enter bug ID to find: ";
+    std::cin >> bugId;
+    board.displayBugDetails(bugId);
+
     for (Bug* bug : bug_vector) {
         delete bug;
     }
+
     return 0;
 }
-
 
 
