@@ -12,6 +12,7 @@
 #include <ctime>
 #include <iomanip>
 #include <algorithm>
+#include <vector>
 
 class ostrtime;
 
@@ -176,16 +177,20 @@ void Board::killBug(int bugId) {
 void Board::displayBoard() const {
     for (int i = 0; i < 10; ++i) {
         for (int j = 0; j < 10; ++j) {
-            Bug* bug = getBugAtPosition(std::make_pair(i, j));
-            if (bug != nullptr) {
-                std::cout << bug->getId() << " ";
+            std::cout << "(" << i << "," << j << "): ";
+            auto it = board.find({i, j});
+            if (it != board.end() && !it->second.empty()) {
+                for (Bug* bug : it->second) {
+                    std::cout << (dynamic_cast<Crawler*>(bug) ? "Crawler " : "Hopper ") << bug->getId() << ", ";
+                }
             } else {
-                std::cout << ". ";
+                std::cout << "empty";
             }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
     }
 }
+
 Bug* Board::getBugAtPosition(std::pair<int, int> position) const {
     for (Bug* bug : bugVector) {
         if (bug->getPosition() == position) {
