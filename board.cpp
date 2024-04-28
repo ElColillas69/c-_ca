@@ -59,11 +59,6 @@ void Board::initializeBoardFromFile(const std::string& filename) {
             std::cerr << "Error parsing line: " << lineNumber << std::endl;
             continue;
         }
-
-        lineNumber++;
-        std::cout << "Line " << lineNumber << ": " << id << " " << x << " " << y << " " << direction << " " << size
-                  << std::endl;
-
         if (direction < 0 || direction >= static_cast<int>(Direction::Count)) {
             std::cerr << "Error: Invalid direction value on line " << lineNumber << std::endl;
             continue;
