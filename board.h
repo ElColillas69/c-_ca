@@ -22,6 +22,7 @@ public:
     void initializeBoardFromFile(const std::string& filename);
     std::vector<Bug*> getBugVector() const;
     void displayBugDetails(int bugId) const;
+    void displayLifeHistory() const;
 };
 
 #endif // BOARD_H
