@@ -1,36 +1,53 @@
-//
-// Created by adria on 4/24/2024.
-//
 #include "hopper.h"
-#include <stdexcept>
 
 Hopper::Hopper(int _id, std::pair<int, int> _position, Direction _direction, int _size, int _hopLength)
         : Bug(_id, _position, _direction, _size), hopLength(_hopLength) {}
 
 void Hopper::move() {
-    if (alive) {
-        if (!isWayBlocked()) {
-            int hopDistance = std::min(hopLength, 20);
-            switch (direction) {
-                case Direction::North:
-                    position.second -= hopDistance;
-                    break;
-                case Direction::East:
-                    position.first += hopDistance;
-                    break;
-                case Direction::South:
-                    position.second += hopDistance;
-                    break;
-                case Direction::West:
-                    position.first -= hopDistance;
-                    break;
-                default:
-                    throw std::logic_error("Invalid direction");
-            }
-            path.push_back(position);
-        } else {
-        }
+    if (!isWayBlocked()) {
+        position.first += hopLength;
+        path.push_back(position);
+    } else {
+
+        direction = static_cast<Direction>((rand() % 4) + 1);
     }
+}
+
+bool Hopper::isWayBlocked() {
+
+    switch (direction) {
+        case Direction::North:
+            return position.first == 0;
+        case Direction::East:
+            return position.second == 9;
+        case Direction::South:
+            return position.first == 9;
+        case Direction::West:
+            return position.second == 0;
+        default:
+            return false;
+    }
+}
+
+
+int Hopper::getId() const {
+    return id;
+}
+
+std::pair<int, int> Hopper::getPosition() const {
+    return position;
+}
+
+Direction Hopper::getDirection() const {
+    return direction;
+}
+
+int Hopper::getSize() const {
+    return size;
+}
+
+bool Hopper::isAlive() const {
+    return alive;
 }
 
 int Hopper::getHopLength() const {

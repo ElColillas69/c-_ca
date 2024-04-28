@@ -1,46 +1,48 @@
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include "bug.h"
+#include "board.h"
 #include "crawler.h"
 #include "hopper.h"
-#include "board.h"
-#include <filesystem>
-
 
 int main() {
-    std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
-
-    std::string absoluteFilePath = "../bugs.txt";
-
     Board board;
-    board.initializeBoardFromFile(absoluteFilePath);
 
-    std::vector<Bug*> bugVector = board.getBugVector();
-    for (const Bug* bug : bugVector) {
-        std::cout << "Bug ID: " << bug->getId() << ", Position: (" << bug->getPosition().first << ", " << bug->getPosition().second << ")" << std::endl;
+    board.initializeBoardFromFile("../bugs.txt");
+
+    while (true) {
+        std::cout
+                << "Please enter an option (1: Display bug, 2: Display life history, 3: Move bug, 4: Kill bug, 5: Display board, 6: Tap board, 7: Write life history to file, 0: Exit): ";
+        int option;
+        std::cin >> option;
+
+        if (option == 0) {
+            break;
+        } else if (option == 1) {
+            std::cout << "Please enter the ID of bug: ";
+            int bugId;
+            std::cin >> bugId;
+            board.displayBugDetails(bugId);
+        } else if (option == 2) {
+            board.displayLifeHistory();
+        } else if (option == 3) {
+            std::cout << "Please enter the ID of the bug you want to move: ";
+            int bugId;
+            std::cin >> bugId;
+            board.moveBug(bugId);
+        } else if (option == 4) {
+            std::cout << "Please enter the ID of the bug you want to kill: ";
+            int bugId;
+            std::cin >> bugId;
+            board.killBug(bugId);
+        } else if (option == 5) {
+            board.displayBoard();
+        } else if (option == 6) {
+            board.tapBoard();
+        } else if (option == 7) {
+            board.writeLifeHistoryToFile();
+        }
     }
-
-    for (Bug* bug : bugVector) {
-        std::cout << bug->getId() << " " << (dynamic_cast<Crawler*>(bug) ? "Crawler" : "Hopper") << " "
-                  << "(" << bug->getPosition().first << "," << bug->getPosition().second << ") "
-                  << bug->getSize() << " " << static_cast<int>(bug->getDirection()) << " "
-                  << (dynamic_cast<Hopper*>(bug) ? dynamic_cast<Hopper*>(bug)->getHopLength() : 0) << " "
-                  << (bug->isAlive() ? "Alive" : "Dead") << std::endl;
-    }
-
-    for (Bug* bug : bugVector) {
-        bug->move();
-    }
-
-    int bugId;
-    std::cout << "Enter bug ID to find: ";
-    std::cin >> bugId;
-    board.displayBugDetails(bugId);
-
-    for (Bug* bug : bugVector) {
-        delete bug;
-    }
-
-    return 0;
 }

@@ -9,8 +9,17 @@
 #include "hopper.h"
 #include <vector>
 #include <sstream>
+#include <ctime>
+#include <iomanip>
+#include <algorithm>
+
+class ostrtime;
+
+class ostrtime;
 
 Board::Board() = default;
+
+int remove(std::vector<Bug *>::iterator iterator, std::vector<Bug *>::iterator iterator1, Bug *pBug);
 
 Board::~Board() {
     for (Bug* bug : bugVector) {
@@ -114,11 +123,112 @@ void Board::initializeBoardFromFile(const std::string& filename) {
 
 void Board::displayLifeHistory() const {
     for (const Bug* bug : bugVector) {
-        std::cout << "Bug " << bug->getId() << " Path: ";
-        const std::list<std::pair<int, int>>& path = bug->getPath();
-        for (const auto& pos : path) {
-            std::cout << "(" << pos.first << "," << pos.second << "),";
+        std::cout << bug->getId() << " ";
+        if (dynamic_cast<const Crawler*>(bug)) {
+            std::cout << "Crawler ";
+        } else if (dynamic_cast<const Hopper*>(bug)) {
+            std::cout << "Hopper ";
         }
-        std::cout << " " << (bug->isAlive() ? "Alive!" : "Dead") << std::endl;
+        std::cout << "Path: ";
+        for (const auto& position : bug->getPath()) {
+            std::cout << "(" << position.first << "," << position.second << "),";
+        }
+        std::cout << " " << (bug->isAlive() ? "Alive!" : "Dead!") << std::endl;
     }
+}
+
+void Board::moveBug(int bugId) {
+    for (Bug* bug : bugVector) {
+        if (bug->getId() == bugId) {
+            if (bug->isWayBlocked()) {
+                std::cout << "Bug " << bugId << " cannot move" << std::endl;
+            } else {
+                auto& positionVector = board[bug->getPosition()];
+                positionVector.erase(std::remove(positionVector.begin(), positionVector.end(), bug), positionVector.end());
+
+                bug->move();
+
+                board[bug->getPosition()].push_back(bug);
+
+                std::cout << "Bug " << bugId << " has moved to (" << bug->getPosition().first << ", " << bug->getPosition().second << ")" << std::endl;
+            }
+            return;
+        }
+    }
+    std::cout << "No bug found with ID " << bugId << std::endl;
+}
+
+void Board::killBug(int bugId) {
+    for (Bug* bug : bugVector) {
+        if (bug->getId() == bugId) {
+            if (!bug->isAlive()) {
+                std::cout << "Bug " << bugId << " is already dead" << std::endl;
+            } else {
+                bug->kill();
+                std::cout << "Bug " << bugId << " has been killed" << std::endl;
+            }
+            return;
+        }
+    }
+    std::cout << "No bug found with ID " << bugId << std::endl;
+}
+
+void Board::displayBoard() const {
+    for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 10; ++j) {
+            Bug* bug = getBugAtPosition(std::make_pair(i, j));
+            if (bug != nullptr) {
+                std::cout << bug->getId() << " ";
+            } else {
+                std::cout << ". ";
+            }
+        }
+        std::cout << std::endl;
+    }
+}
+Bug* Board::getBugAtPosition(std::pair<int, int> position) const {
+    for (Bug* bug : bugVector) {
+        if (bug->getPosition() == position) {
+            return bug;
+        }
+    }
+    return nullptr;
+}
+
+void Board::tapBoard() {
+    for (Bug* bug : bugVector) {
+        if (bug->isAlive()) {
+            bug->move();
+        }
+    }
+}
+
+void Board::writeLifeHistoryToFile() const {
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%Y-%m-%d_%H-%M-%S");
+    auto str = oss.str();
+
+    std::ofstream file("bugs_life_history_" + str + ".out");
+    if (!file) {
+        std::cerr << "Unable to open file for writing" << std::endl;
+        return;
+    }
+
+    for (const Bug* bug : bugVector) {
+        file << bug->getId() << " ";
+        if (dynamic_cast<const Crawler*>(bug)) {
+            file << "Crawler ";
+        } else if (dynamic_cast<const Hopper*>(bug)) {
+            file << "Hopper ";
+        }
+        file << "Path: ";
+        for (const auto& position : bug->getPath()) {
+            file << "(" << position.first << "," << position.second << "),";
+        }
+        file << " " << (bug->isAlive() ? "Alive!" : "Dead!") << std::endl;
+    }
+
+    file.close();
 }
