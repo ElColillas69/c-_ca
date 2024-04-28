@@ -15,6 +15,9 @@ enum class Direction {
 class Bug {
 public:
     Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size);
+
+    Bug(int i, int i1, int i2, int i3, int i4);
+
     virtual ~Bug();
 
     virtual void move() = 0;

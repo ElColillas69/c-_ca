@@ -13,4 +13,6 @@ add_executable(C___CA main.cpp
         bug.cpp
         bug.h
         board.cpp
-        board.h)
+        board.h
+        dasher.cpp
+        dasher.h)

@@ -24,7 +24,7 @@ public:
     void moveBug(int bugId);
     void killBug(int bugId);
     void displayBoard() const;
-    Bug* getBugAtPosition(std::pair<int, int> position) const;
+    [[nodiscard]] Bug* getBugAtPosition(std::pair<int, int> position) const;
     void tapBoard();
     void writeLifeHistoryToFile() const;
 };

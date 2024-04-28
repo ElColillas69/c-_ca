@@ -33,3 +33,7 @@ void Bug::kill() {
 const std::list<std::pair<int, int>> & Bug::getPath() const {
     return path;
 }
+
+Bug::Bug(int i, int i1, int i2, int i3, int i4) {
+
+}
